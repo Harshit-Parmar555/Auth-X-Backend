@@ -38,6 +38,11 @@ app.use(
 // PORT
 const PORT = process.env.PORT || 4000;
 
+// Routes
+import authRouter from "./src/routes/auth.route.js";
+
+app.use("/api/v1/auth", authRouter);
+
 // App listening
 connectDb()
   .then(() => {
