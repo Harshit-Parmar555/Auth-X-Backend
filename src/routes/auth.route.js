@@ -5,12 +5,13 @@ import {
   logout,
   signup,
 } from "../controllers/auth.controller.js";
+import { protectedRoute } from "../middlewares/auth.js";
 
 const authRouter = express.Router();
 
 authRouter.post("/signup", signup);
 authRouter.post("/login", login);
 authRouter.get("/logout", logout);
-authRouter.get("checkAuth", checkAuth);
+authRouter.get("/checkAuth", protectedRoute,checkAuth);
 
 export default authRouter;
