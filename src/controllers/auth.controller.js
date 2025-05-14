@@ -1,7 +1,12 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import { generateJwt } from "../utils/jwt.js";
-import { sendVerificationEmail, sendWelcomeEmail } from "../mailer/mailer.js";
+import {
+  sendVerificationEmail,
+  sendWelcomeEmail,
+  sendResetPasswordEmail,
+  sendResetSuccessEmail,
+} from "../mailer/mailer.js";
 
 // Signup controller
 export const signup = async (req, res) => {
