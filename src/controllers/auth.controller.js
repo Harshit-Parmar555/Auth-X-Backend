@@ -61,3 +61,50 @@ export const signup = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// Login controller
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please provide all fields" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+
+    if (!user.isVerified) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Email not verified" });
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid password" });
+    }
+
+    const token = generateJwt(user._id);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    const resUser = await User.findOne({ email }).select("-password");
+    return res
+      .status(200)
+      .json({ success: true, message: "Login successfull", resUser });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
