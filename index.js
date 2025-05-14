@@ -3,6 +3,7 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 // Database connection function
 import { connectDb } from "./src/db/connect.js";
@@ -13,6 +14,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 // Logger config
 import morgan from "morgan";
