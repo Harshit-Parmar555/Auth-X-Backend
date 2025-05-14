@@ -202,3 +202,47 @@ export const forgetPassword = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// Password reset controller
+export const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+    if (!token || !password) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Credentials not provided" });
+    }
+
+    const user = await User.findOne({ resetPasswordToken: token });
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found" });
+    }
+
+    if (
+      user.resetPasswordTokenExpiresAt &&
+      user.resetPasswordTokenExpiresAt < Date.now()
+    ) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Reset token has expired" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordTokenExpiresAt = undefined;
+    await user.save();
+
+    await sendResetSuccessEmail(user.email);
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Password Changed Successfully" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
