@@ -15,5 +15,6 @@ authRouter.post("/login", login);
 authRouter.get("/logout", logout);
 authRouter.get("/checkAuth", protectedRoute, checkAuth);
 authRouter.post("/verifyEmail", verifyEmail);
+userRouter.post("/forgetPassword", forgetPassword);
 
 export default authRouter;

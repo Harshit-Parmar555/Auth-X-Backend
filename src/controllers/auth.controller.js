@@ -168,3 +168,37 @@ export const verifyEmail = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// Forget password controller
+export const forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Email not provided" });
+    }
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User not found with this email" });
+    }
+
+    const resetToken = Math.floor(100000 + Math.random() * 900000).toString();
+    const resetTokenExpiresAt = Date.now() + 1 * 60 * 60 * 1000;
+
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordTokenExpiresAt = resetTokenExpiresAt;
+    await user.save();
+
+    await sendResetPasswordEmail(
+      user.email,
+      `${process.env.CLIENT_URL}/resetpassword/${resetToken}`
+    );
+
+    return res.status(200).json({ success: true, message: "Email sent !" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
