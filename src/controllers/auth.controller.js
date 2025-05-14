@@ -1,7 +1,7 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import { generateJwt } from "../utils/jwt.js";
-import {sendVerificationEmail } from "../mailer/mailer.js";
+import { sendVerificationEmail, sendWelcomeEmail } from "../mailer/mailer.js";
 
 // Signup controller
 export const signup = async (req, res) => {
@@ -129,6 +129,41 @@ export const checkAuth = async (req, res) => {
     return res
       .status(200)
       .json({ success: false, message: "Authenticated", user: req.user });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// Verify email controller
+export const verifyEmail = async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Token not provided" });
+    }
+
+    const user = await User.findOne({
+      verificationToken: token,
+      verificationTokenExpiresAt: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ success: false, message: "Invalid token" });
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationTokenExpiresAt = undefined;
+
+    await user.save();
+
+    await sendWelcomeEmail(user.email, user.username);
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Email verfied successfully" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
