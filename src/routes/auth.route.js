@@ -3,16 +3,16 @@ import {
   checkAuth,
   login,
   logout,
-  signup,
   verifyEmail,
   forgetPassword,
   resetPassword,
+  register,
 } from "../controllers/auth.controller.js";
 import { protectedRoute } from "../middlewares/auth.js";
 
 const authRouter = express.Router();
 
-authRouter.post("/signup", signup);
+authRouter.post("/register", register);
 authRouter.post("/login", login);
 authRouter.get("/logout", logout);
 authRouter.get("/checkAuth", protectedRoute, checkAuth);
