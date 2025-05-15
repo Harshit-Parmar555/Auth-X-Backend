@@ -1,4 +1,7 @@
+// Importing necessary modules
 import jwt from "jsonwebtoken";
+
+// user model
 import { User } from "../models/user.model.js";
 
 // Protected route for auth

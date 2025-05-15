@@ -1,6 +1,11 @@
+// File: index.js
+// Description: This is the entry point of the backend application. It sets up the server, connects to the database, and configures middleware and routes.
+
+// dotenv config
 import dotenv from "dotenv";
 dotenv.config();
 
+// Importing required modules
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -11,6 +16,7 @@ import { connectDb } from "./src/db/connect.js";
 // Express App
 const app = express();
 
+// Frontend URL
 const frontendUrl =
   process.env.NODE_ENV === "production"
     ? process.env.CLIENT_URL

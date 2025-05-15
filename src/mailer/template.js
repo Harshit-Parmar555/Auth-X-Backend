@@ -1,3 +1,5 @@
+// This file contains the HTML templates for various transactional emails sent by the AuthX application.
+
 // VERIFICATION EMAIL TEMPLATE
 export const VERIFICATION_EMAIL_TEMPLATE = `
 <!DOCTYPE html>
@@ -97,6 +99,7 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 </html>
 `;
 
+// WELCOME EMAIL TEMPLATE
 export const WELCOME_EMAIL_TEMPLATE = `
 <!DOCTYPE html>
 <html lang="en">

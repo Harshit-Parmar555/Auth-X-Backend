@@ -1,4 +1,7 @@
+// Importing necessary modules
 import nodemailer from "nodemailer";
+
+// Importing required templates
 import {
   VERIFICATION_EMAIL_TEMPLATE,
   PASSWORD_RESET_REQUEST_TEMPLATE,
@@ -6,7 +9,7 @@ import {
   WELCOME_EMAIL_TEMPLATE,
 } from "./template.js";
 
-// VERIFICATION EMAIL
+// Verfication email function
 export const sendVerificationEmail = async (email, verificationToken) => {
   try {
     let transport = nodemailer.createTransport({
@@ -34,7 +37,7 @@ export const sendVerificationEmail = async (email, verificationToken) => {
   }
 };
 
-// WELCOME EMAIL
+// Welcome email function
 export const sendWelcomeEmail = async (email, name) => {
   try {
     let transport = nodemailer.createTransport({
@@ -57,7 +60,7 @@ export const sendWelcomeEmail = async (email, name) => {
   }
 };
 
-// RESET PASSWORD EMAIL
+// Reset password email function
 export const sendResetPasswordEmail = async (email, resetUrl) => {
   try {
     let transport = nodemailer.createTransport({
@@ -80,7 +83,7 @@ export const sendResetPasswordEmail = async (email, resetUrl) => {
   }
 };
 
-// RESET SUCCESS MAIL
+// Reset success email function
 export const sendResetSuccessEmail = async (email) => {
   try {
     let transport = nodemailer.createTransport({

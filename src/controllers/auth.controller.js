@@ -1,6 +1,13 @@
-import { User } from "../models/user.model.js";
+// Importing necessary modules
 import bcrypt from "bcrypt";
+
+// user model
+import { User } from "../models/user.model.js";
+
+// JWT utility function
 import { generateJwt } from "../utils/jwt.js";
+
+// Email functions
 import {
   sendVerificationEmail,
   sendWelcomeEmail,

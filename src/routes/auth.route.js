@@ -1,4 +1,7 @@
+// Importing necessary modules
 import express from "express";
+
+// Importing required controllers
 import {
   checkAuth,
   login,
@@ -8,10 +11,14 @@ import {
   resetPassword,
   register,
 } from "../controllers/auth.controller.js";
+
+// Importing required middlewares
 import { protectedRoute } from "../middlewares/auth.js";
 
+// Creating an instance of express Router
 const authRouter = express.Router();
 
+// Defining routes for authentication
 authRouter.post("/register", register);
 authRouter.post("/login", login);
 authRouter.get("/logout", logout);

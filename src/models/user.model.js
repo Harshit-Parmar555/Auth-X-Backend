@@ -1,3 +1,4 @@
+// Importing necessary modules
 import mongoose from "mongoose";
 
 // User schema
