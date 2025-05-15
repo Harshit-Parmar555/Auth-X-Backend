@@ -27,7 +27,7 @@ This is the **backend server** for **Auth-X**, a full-stack authentication syste
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/auth-x-backend.git
+git clone https://github.com/Harshit-Parmar555/Auth-X-Backend.git
 cd backend
 ```
 
