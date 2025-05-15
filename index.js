@@ -11,8 +11,18 @@ import { connectDb } from "./src/db/connect.js";
 // Express App
 const app = express();
 
+const frontendUrl =
+  process.env.NODE_ENV === "production"
+    ? process.env.CLIENT_URL
+    : "http://localhost:5173";
+
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: frontendUrl,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
