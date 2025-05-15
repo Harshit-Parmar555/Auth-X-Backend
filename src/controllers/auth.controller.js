@@ -109,7 +109,7 @@ export const login = async (req, res) => {
     const resUser = await User.findOne({ email }).select("-password");
     return res
       .status(200)
-      .json({ success: true, message: "Login successfull", resUser });
+      .json({ success: true, message: "Login successfull", user: resUser });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
